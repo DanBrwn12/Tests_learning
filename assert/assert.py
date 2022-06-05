@@ -16,6 +16,8 @@ def password_strength(value: str) -> str:
 # если все буквы в value содержаться в digits или lowers или uppers
     if all(e in digits for e in value) or all(e in lowers for e in value) or all(e in uppers for e in value):
         return 'Weak'
+    if (any(e in digits for e in value) and any(e in lowers for e in value)) or (any(e in digits for e in value) and any(e in uppers for e in value)) or (any(e in lowers for e in value) and any(e in uppers for e in value)):
+        return 'Good'
     return ''
 
 
