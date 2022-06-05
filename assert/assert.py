@@ -13,6 +13,9 @@ def password_strength(value: str) -> str:
     uppers = lowers.upper()
     if len(value) < 8:
         return 'Too Weak'
+# если все буквы в value содержаться в digits или lowers или uppers
+    if all(e in digits for e in value) or all(e in lowers for e in value) or all(e in uppers for e in value):
+        return 'Weak'
     return ''
 
 
