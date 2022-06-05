@@ -5,7 +5,9 @@
 # - если пароль содержит символы любых 3 наборов вернуть Very Good
 
 def password_strength(value:str)->str:
-    pass
+    if len(value)<8:
+        return 'Too Weak'
+    return ''
 
 if __name__ == '__main__':
     assert password_strength('')=='Too Weak'
