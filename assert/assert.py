@@ -8,22 +8,24 @@ import string
 
 
 def password_strength(value: str) -> str:
+    if len(value) < 8:
+        return 'Too Weak'
     digits = string.digits
     lowers = string.ascii_lowercase
     uppers = lowers.upper()
-    if len(value) < 8:
-        return 'Too Weak'
-    # если все буквы в value содержат digits или lowers или uppers
-    if all(e in digits for e in value) or all(e in lowers for e in value) or all(e in uppers for e in value):
-        return 'Weak'
-    if any(e in digits for e in value) and any(e in lowers for e in value) and any(e in uppers for e in value):
+    count = 0
+    for symbols in (digits, lowers, uppers):
+        if any(e in symbols for e in value):
+            count += 1
+            continue
+    if count == 3:
         return 'Very Good'
-    if (any(e in digits for e in value) and any(e in lowers for e in value)) or (
-            any(e in digits for e in value) and any(e in uppers for e in value)) or (
-            any(e in lowers for e in value) and any(e in uppers for e in value)):
-        return 'Good'
+    return 'Weak' if count == 1 else 'Good'
 
 
+
+# Есть счетчик пароля count. Если он 1 то возвращаем что слабый, если 3 (значит что все три символа там присутствуют)
+# то возвращаем очень хороший, в остальных случаях хороший
 
 if __name__ == '__main__':
     assert password_strength('') == 'Too Weak'
@@ -40,6 +42,7 @@ if __name__ == '__main__':
     assert password_strength('1234ASDF') == 'Good'
     assert password_strength('asdfASDF') == 'Good'
     assert password_strength('asdfdasdfASDF') == 'Good'
-    assert password_strength('12asdDGN') == 'Very Good'
-    assert password_strength('DBNMasddsad321') == 'Very Good'
-    assert password_strength('123NRJDKdngjd') == 'Very Good'
+    assert password_strength('123asdDGNnI') == 'Very Good'
+    assert password_strength('1234567Zz') == 'Very Good'
+    assert password_strength('asdfghhjC2') == 'Very Good'
+    assert password_strength('ASDDFGBG1a') == 'Very Good'
